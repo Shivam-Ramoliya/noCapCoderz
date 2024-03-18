@@ -1,0 +1,7 @@
+111	Shivam.R	Convener	Sports	7984406542
+999	nitant	member	Sports	9874563201
+222	shubham	member	Khelaya	7600065064
+666	pratham	member	Khelaya	1597684203
+888	pranav	convener	Chess	9876542013
+555	ved	member	Sports	9875462130
+546	abcdef	member	Muse	9456781203
