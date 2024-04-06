@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <string.h>
+#include <iomanip>
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
@@ -33,25 +34,26 @@ void view_clubs();
 void delete_club();
 int password();
 bool is_member_exists(int memberID);
+bool sort_clubs(const Member &a, const Member &b);
+string select_category();
 string select_club();
 
 // Global constants
 const string FILENAME = "record.csv";
 const string CLUBS_FILE = "clubs.csv";
-
 // Function to display main menu
 void main_menu()
 {
     system("cls");
     cout << "\n============== MAIN MENU ==============" << endl;
-    cout << "==\t1. Add Member                ==" << endl;
-    cout << "==\t2. Delete Member             ==" << endl;
-    cout << "==\t3. Search Member             ==" << endl;
-    cout << "==\t4. View Members              ==" << endl;
-    cout << "==\t5. Add Club                  ==" << endl;
-    cout << "==\t6. Delete Club               ==" << endl;
-    cout << "==\t7. View Clubs                ==" << endl;
-    cout << "==\t8. Close Application         ==" << endl;
+    cout << "||\t  1. Add Member              ||" << endl;
+    cout << "||\t  2. Delete Member           ||" << endl;
+    cout << "||\t  3. Search Member           ||" << endl;
+    cout << "||\t  4. View Members            ||" << endl;
+    cout << "||\t  5. Add Club                ||" << endl;
+    cout << "||\t  6. Delete Club             ||" << endl;
+    cout << "||\t  7. View Clubs              ||" << endl;
+    cout << "||\t  8. Close Application       ||" << endl;
     cout << "=======================================" << endl;
     cout << "Enter Your Choice: ";
 
@@ -80,14 +82,23 @@ void main_menu()
         break;
     case '8':
         system("cls");
-        cout << "\n\n\n======================================================================\n\n\n";
-        cout << "\n\n\tTHANK YOU FOR USING CLUB Management System\t\n\n";
-        cout << "\n\n\n======================================================================\n\n\n";
+        cout << "\n\n\n======================================================================" << endl;
+        cout << "||                                                                  ||" << endl;
+        cout << "||                                                                  ||" << endl;
+        cout << "||          THANK YOU FOR USING CLUB MANAGEMENT SYSTEM :)           ||" << endl;
+        cout << "||                                                                  ||" << endl;
+        cout << "||                     Members (noCapCoderz) :                      ||" << endl;
+        cout << "||                         RAMOLIYA SHIVAM                          ||" << endl;
+        cout << "||                          PRANAV MANDANI                          ||" << endl;
+        cout << "||                           VED MUNGRA                             ||" << endl;
+        cout << "||                         PRATHAM LAKHANI                          ||" << endl;
+        cout << "||                                                                  ||" << endl;
+        cout << "======================================================================\n\n\n";
         exit(0);
     default:
         system("cls");
         cout << "\a"; // Beep sound for invalid choice
-        cout << "\nEnter a Valid Choice !";
+        cout << "\nEnter Valid Choice !";
         _sleep(1000); // Wait for 0.5 sec.
         main_menu();
     }
@@ -97,15 +108,20 @@ void main_menu()
 bool is_member_exists(int memberID)
 {
     ifstream fin(FILENAME);
-    if (!fin)
+    if (!fin.is_open())
     {
         cerr << "Error opening file for reading!" << endl;
         exit(1);
     }
 
     Member member;
-    while (fin >> member.ID >> member.name >> member.post >> member.club >> member.Phone_no)
+    string line;
+    while (getline(fin, line))
     {
+        stringstream ss(line);
+        string token;
+        getline(ss, token, ',');
+        member.ID = stoi(token);
         if (member.ID == memberID)
         {
             fin.close();
@@ -128,16 +144,15 @@ void add_new_member()
         system("cls");
         Member member;
         ofstream fout(FILENAME, ios::app);
-        cout << "\nAdd Member INFO" << endl;
+        cout << "\nAdd MEMBER INFO" << endl;
         cout << "Member ID: ";
         cin >> member.ID;
-        if (!is_member_exists(member.ID))
+        if (is_member_exists(member.ID))
         {
             cout << "Error: Member with ID " << member.ID << " already exists!" << endl;
             cout << "Press any key to continue...";
             getch();
             main_menu();
-            return;
         }
         cin.ignore();
         cout << "Name: ";
@@ -145,7 +160,7 @@ void add_new_member()
         cout << "Post: ";
         getline(cin, member.post);
         member.club = select_club(); // Select club by name
-        cout << "Phone Number: ";
+        cout << "Phone_Number: ";
         cin >> member.Phone_no;
         fout << member.ID << "," << member.name << "," << member.post << "," << member.club << "," << member.Phone_no << endl;
         fout.close();
@@ -169,7 +184,7 @@ void add_new_member()
         default:
         {
             system("cls"); // Clear screen
-            cout << "\a\nEnter a Valid Option !" << endl;
+            cout << "\a\nEnter Valid Option !" << endl;
             _sleep(1000);
             goto flag;
         }
@@ -178,7 +193,7 @@ void add_new_member()
     else
     {
         system("cls");
-        cout << "\nWrong Password !" << endl;
+        cout << "\nWrong Password !";
         _sleep(1000);
         add_new_member();
     }
@@ -191,7 +206,7 @@ void delete_member()
     int x = password();
     if (x)
     {
-        cout << "\nPassword Matched !" << endl;
+        cout << "\nPassword Matched !";
         _sleep(1000);
         system("cls");
         ifstream fin(FILENAME);
@@ -226,7 +241,7 @@ void delete_member()
     else
     {
         system("cls");
-        cout << "\nWrong Password !" << endl;
+        cout << "\nWrong Password !";
         _sleep(1000);
         delete_member();
     }
