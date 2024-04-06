@@ -87,7 +87,7 @@ void main_menu()
     default:
         system("cls");
         cout << "\a"; // Beep sound for invalid choice
-        cout << "\nEnter Valid Choice !";
+        cout << "\nEnter a Valid Choice !";
         _sleep(1000); // Wait for 0.5 sec.
         main_menu();
     }
@@ -128,7 +128,7 @@ void add_new_member()
         system("cls");
         Member member;
         ofstream fout(FILENAME, ios::app);
-        cout << "\nAdd MEMBER INFO" << endl;
+        cout << "\nAdd Member INFO" << endl;
         cout << "Member ID: ";
         cin >> member.ID;
         if (!is_member_exists(member.ID))
@@ -169,7 +169,7 @@ void add_new_member()
         default:
         {
             system("cls"); // Clear screen
-            cout << "\a\nEnter Valid Option !" << endl;
+            cout << "\a\nEnter a Valid Option !" << endl;
             _sleep(1000);
             goto flag;
         }
