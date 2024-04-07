@@ -27,6 +27,7 @@ void delete_member();
 void view_members();
 void search_member();
 void return_to_main_menu();
+string select_category();
 
 // Function to display main menu
 void main_menu()
@@ -388,4 +389,36 @@ void return_to_main_menu()
     cout << "\nPress ENTER to return to the main menu...";
     getch();
     main_menu();
+}
+
+// Function to select club category
+string select_category()
+{
+    string s[5];
+    s[0] = "Skill Development";
+    s[1] = "Art";
+    s[2] = "Technical";
+    s[3] = "Social";
+    s[4] = "Commerce";
+
+    cout << "\n=========== SELECT CLUB CATEGORY ===========" << endl;
+    cout << "||           1. Skill Development         ||" << endl;
+    cout << "||           2. Art                       ||" << endl;
+    cout << "||           3. Technical                 ||" << endl;
+    cout << "||           4. Social                    ||" << endl;
+    cout << "||           5. Commerce                  ||" << endl;
+    cout << "=============================================" << endl;
+    cout << endl;
+    cout << "Enter choice : ";
+    int p;
+    cin >> p;
+    cin.ignore();
+    if (p < 1 || p > 5)
+    {
+        cout << "Invalid Choice" << endl;
+        _sleep(1000);
+        return_to_main_menu();
+    }
+    else
+        return s[p - 1];
 }
