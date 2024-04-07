@@ -23,6 +23,7 @@ struct Member
 // Function prototypes
 void main_menu();
 void add_new_member();
+void delete_member();
 
 // Function to display main menu
 void main_menu()
@@ -150,5 +151,53 @@ void add_new_member()
         cout << "\nWrong Password !";
         _sleep(1000);
         add_new_member();
+    }
+}
+
+// Function to delete a member
+void delete_member()
+{
+    system("cls");
+    int x = password();
+    if (x)
+    {
+        cout << "\nPassword Matched !";
+        _sleep(1000);
+        system("cls");
+        ifstream fin(FILENAME);
+        ofstream fout("temp.csv");
+        int del;
+        bool found = false;
+        Member member;
+        cout << "\nEnter the Member ID to delete: ";
+        cin >> del;
+        string line;
+        while (getline(fin, line))
+        {
+            stringstream ss(line);
+            string token;
+            getline(ss, token, ',');
+            member.ID = stoi(token);
+            if (member.ID != del)
+                fout << line << endl;
+            else
+                found = true;
+        }
+        fin.close();
+        fout.close();
+        remove(FILENAME.c_str());
+        rename("temp.csv", FILENAME.c_str());
+        if (found)
+            cout << "The record is successfully deleted" << endl;
+        else
+            cout << "No record found with ID " << del << endl;
+        return_to_main_menu();
+    }
+    else
+    {
+        system("cls");
+        cout << "\nWrong Password !";
+        _sleep(1000);
+        delete_member();
     }
 }
