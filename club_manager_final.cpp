@@ -25,6 +25,8 @@ void main_menu();
 void add_new_member();
 void delete_member();
 void view_members();
+void search_member();
+void return_to_main_menu();
 
 // Function to display main menu
 void main_menu()
@@ -233,6 +235,151 @@ void view_members()
     }
     cout << "=========================================================================================================";
     return_to_main_menu();
+}
+
+// Function to search for a member
+void search_member()
+{
+    system("cls");
+    ifstream fin(FILENAME);
+    unordered_map<int, Member> memberMap;
+    string line;
+    while (getline(fin, line))
+    {
+        stringstream ss(line);
+        Member member;
+        string token;
+        getline(ss, token, ',');
+        member.ID = stoi(token);
+        getline(ss, member.name, ',');
+        getline(ss, member.post, ',');
+        getline(ss, member.club, ',');
+        getline(ss, token, ',');
+        member.Phone_no = stoll(token);
+        memberMap[member.ID] = member;
+    }
+    fin.close();
+    int choice;
+    cout << "\n=====================================" << endl;
+    cout << "==\tSearch by:                 ==" << endl;
+    cout << "==\t1. Member ID               ==" << endl;
+    cout << "==\t2. Member Name             ==" << endl;
+    cout << "==\t3. Club Name               ==" << endl;
+    cout << "==\t4. Return to MainMenu      ==" << endl;
+    cout << "=====================================" << endl;
+    cout << "Enter your choice: ";
+    char ch = _getch();
+    switch (ch)
+    {
+
+    case '1':
+    {
+        system("cls");
+        int s;
+        bool found = false;
+        cout << "\nEnter the Member ID to search: ";
+        cin >> s;
+        if (memberMap.find(s) != memberMap.end())
+        {
+            Member member = memberMap[s];
+            cout << "The Member is available" << endl;
+            cout << "ID    : " << member.ID << endl;
+            cout << "Name  : " << member.name << endl;
+            cout << "Post  : " << member.post << endl;
+            cout << "Club  : " << member.club << endl;
+            cout << "Ph_No.: " << member.Phone_no << endl;
+            cout << endl;
+            found = true;
+        }
+        if (!found)
+        {
+            cout << "No record found with ID " << s << endl;
+        }
+        cout << "Press ENTER to return to the search Member section...";
+        _getch();
+        search_member();
+    }
+
+    case '2':
+    {
+        system("cls");
+        string s;
+        bool found = false;
+        cout << "\nEnter the Member Name to search: ";
+        getline(cin, s);
+        for (const auto &entry : memberMap)
+        {
+            Member member = entry.second;
+            if (member.name == s)
+            {
+                cout << "The Member is available" << endl;
+                cout << "ID    : " << member.ID << endl;
+                cout << "Name  : " << member.name << endl;
+                cout << "Post  : " << member.post << endl;
+                cout << "Club  : " << member.club << endl;
+                cout << "Ph_No.: " << member.Phone_no << endl;
+                cout << endl;
+                found = true;
+            }
+        }
+        if (!found)
+        {
+            cout << "No record found with name " << s << endl;
+        }
+        cout << "Press ENTER to return to the search Member section...";
+        _getch();
+        search_member();
+    }
+
+    case '3':
+    {
+        system("cls");
+        string club;
+        bool found = false;
+        cout << "\Select the Club Name to search: ";
+        club = select_club();
+        system("cls");
+        cout << "The Members of " << club << " Club is as Listed Below." << endl;
+        for (const auto &entry : memberMap)
+        {
+            Member member = entry.second;
+            if (member.club == club)
+            {
+                cout << "\nThe Member is available" << endl;
+                cout << "ID    : " << member.ID << endl;
+                cout << "Name  : " << member.name << endl;
+                cout << "Post  : " << member.post << endl;
+                cout << "Club  : " << member.club << endl;
+                cout << "Ph_No.: " << member.Phone_no << endl;
+                cout << endl;
+                found = true;
+            }
+        }
+        if (!found)
+        {
+            cout << "No record found in club with name " << club << endl;
+        }
+        cout << "Press ENTER to return to the search Member section...";
+        _getch();
+        search_member();
+    }
+
+    case '4':
+    {
+        cout << "\nReturning to Main Menu...";
+        _sleep(1000);
+        main_menu();
+    }
+
+    default:
+    {
+        system("cls");
+        cout << "\a";
+        cout << "\nEnter Valid Choice !" << endl;
+        _sleep(1000);
+        search_member();
+    }
+    }
 }
 
 // Function to return to main menu
