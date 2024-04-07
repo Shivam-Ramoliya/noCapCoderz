@@ -28,6 +28,7 @@ void view_members();
 void search_member();
 void return_to_main_menu();
 string select_category();
+void add_new_club();
 
 // Function to display main menu
 void main_menu()
@@ -421,4 +422,34 @@ string select_category()
     }
     else
         return s[p - 1];
+}
+
+// Function to add club
+void add_new_club()
+{
+    system("cls");
+    int x = password();
+    if (x)
+    {
+        cout << "\nPassword Matched !";
+        _sleep(1000);
+        system("cls");
+        ofstream fout(CLUBS_FILE, ios::app);
+        string clubName;
+        string clubCategory;
+        clubCategory = select_category();
+        cout << "\nEnter Club Name: ";
+        getline(cin, clubName);
+        fout << clubName << "," << clubCategory << endl;
+        fout.close();
+        cout << "Club added successfully!" << endl;
+        return_to_main_menu();
+    }
+    else
+    {
+        system("cls");
+        cout << "\nWrong Password !";
+        _sleep(1000);
+        add_new_club();
+    }
 }
