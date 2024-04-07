@@ -24,6 +24,7 @@ struct Member
 void main_menu();
 void add_new_member();
 void delete_member();
+void view_members();
 
 // Function to display main menu
 void main_menu()
@@ -200,4 +201,36 @@ void delete_member()
         _sleep(1000);
         delete_member();
     }
+}
+// Function to view all members
+void view_members()
+{
+    system("cls");
+    ifstream fin(FILENAME);
+    vector<Member> members;
+    Member member;
+    while (fin >> member.ID)
+    {
+        fin.ignore();
+        getline(fin, member.name, ',');
+        getline(fin, member.post, ',');
+        getline(fin, member.club, ',');
+        fin >> member.Phone_no;
+        members.push_back(member);
+    }
+    fin.close();
+
+    // Sort members by club name
+    sort(members.begin(), members.end(), sort_clubs);
+
+    // Displaying Member Sorted Clubwise.
+    cout << "\n======================================= MEMBER LIST SORT CLUBWISE =======================================" << endl;
+    cout << "||                                                                                                     ||" << endl;
+    cout << "||  <MEM_ID>" << setw(13) << left << "\t<MEMBER NAME>" << setw(13) << left << "\t\t<Post>" << setw(13) << left << "\t\t<club>" << setw(13) << left << "\t\t<PHONE_NO>     ||" << endl;
+    for (const auto &member : members)
+    {
+        cout << "||  " << member.ID << "\t\t" << setw(15) << left << member.name << "\t\t" << setw(15) << left << member.post << "\t\t" << setw(15) << left << member.club << "\t\t" << setw(15) << left << member.Phone_no << "||" << endl;
+    }
+    cout << "=========================================================================================================";
+    return_to_main_menu();
 }
