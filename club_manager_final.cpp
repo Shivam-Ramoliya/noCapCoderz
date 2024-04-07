@@ -31,6 +31,7 @@ string select_category();
 void add_new_club();
 string select_club();
 void Loading();
+int password();
 
 // Function to display main menu
 void main_menu()
@@ -144,6 +145,37 @@ void Loading()
     system("cls"); // Clears the Screen
     main_menu();
 }
+
+// Function to prompt for password
+int password()
+{
+    system("cls");                              // Clears the Screen
+    char pass[10], ch, password[10] = "123456"; // Define password
+    int i = 0;
+    cout << "* Please check Secret.txt file before running code !" << endl;
+    cout << endl;
+    cout << "\nEnter the password to Enter: ";
+    while (ch != 13) // Loop until Enter key is pressed
+    {
+        ch = getch();
+        if (ch != 13 && ch != 8) // Display '*' for each character entered
+        {
+            cout << "*";
+            pass[i] = ch;
+            i++;
+        }
+    }
+    pass[i] = '\0';
+    if (strcmp(pass, password) == 0) // Check if password matches
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 
 void add_new_member()
 {
