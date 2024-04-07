@@ -30,6 +30,7 @@ void return_to_main_menu();
 string select_category();
 void add_new_club();
 string select_club();
+void Loading();
 
 // Function to display main menu
 void main_menu()
@@ -94,6 +95,56 @@ void main_menu()
     }
 }
 //Function to add a new member.
+
+// Function for Loading page
+void Loading()
+{
+    system("cls"); // Clears the Screen
+    char ch;
+    cout << endl;
+    cout << "           WE HEARTLY WELCOMES YOU :)           " << endl;
+    cout << "==============================================" << endl;
+    cout << "||          CLUB MANAGEMENT SYSTEM          ||" << endl;
+    cout << "||            By noCapCoderz :)             ||" << endl;
+    cout << "==============================================" << endl;
+    cout << endl;
+    cout << "==============================================" << endl;
+    cout << "||                Members :                 ||" << endl;
+    cout << "||             RAMOLIYA SHIVAM              ||" << endl;
+    cout << "||              PRANAV MANDANI              ||" << endl;
+    cout << "||                VED MUNGRA                ||" << endl;
+    cout << "||             PRATHAM LAKHANI              ||" << endl;
+    cout << "==============================================" << endl;
+    cout << endl;
+    cout << " Press any KEY to enter our the System.....";
+    getch();
+    system("cls"); // Clears the Screen
+    cout << endl;
+    cout << "           WE HEARTLY WELCOMES YOU :)           " << endl;
+    cout << "==============================================" << endl;
+    cout << "||          CLUB MANAGEMENT SYSTEM          ||" << endl;
+    cout << "||            By noCapCoderz :)             ||" << endl;
+    cout << "==============================================" << endl;
+    cout << endl;
+    cout << "==============================================" << endl;
+    cout << "||                Members :                 ||" << endl;
+    cout << "||             RAMOLIYA SHIVAM              ||" << endl;
+    cout << "||              PRANAV MANDANI              ||" << endl;
+    cout << "||                VED MUNGRA                ||" << endl;
+    cout << "||             PRATHAM LAKHANI              ||" << endl;
+    cout << "==============================================" << endl;
+    cout << endl;
+    cout << "\n\t\tPlease Wait!!" << endl;
+    cout << "\t\tLoading ";
+    for (int i = 0; i < 7; i++)
+    {
+        cout << ".";
+        _sleep(300); // Wait for 0.3 seconds
+    }
+    system("cls"); // Clears the Screen
+    main_menu();
+}
+
 void add_new_member()
 {
     system("cls");
