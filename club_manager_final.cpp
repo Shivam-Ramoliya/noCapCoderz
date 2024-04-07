@@ -22,6 +22,7 @@ struct Member
 };
 // Function prototypes
 void main_menu();
+void add_new_member();
 
 // Function to display main menu
 void main_menu()
@@ -83,5 +84,71 @@ void main_menu()
         cout << "\nEnter Valid Choice !";
         _sleep(1000); // Wait for 0.5 sec.
         main_menu();
+    }
+}
+//Function to add a new member.
+void add_new_member()
+{
+    system("cls");
+    int x = password();
+    if (x)
+    {
+        cout << "\nPassword Matched !";
+        _sleep(1000);
+        system("cls");
+        Member member;
+        ofstream fout(FILENAME, ios::app);
+        cout << "\nAdd MEMBER INFO" << endl;
+        cout << "Member ID: ";
+        cin >> member.ID;
+        if (is_member_exists(member.ID))
+        {
+            cout << "Error: Member with ID " << member.ID << " already exists!" << endl;
+            cout << "Press any key to continue...";
+            getch();
+            main_menu();
+        }
+        cin.ignore();
+        cout << "Name: ";
+        getline(cin, member.name);
+        cout << "Post: ";
+        getline(cin, member.post);
+        member.club = select_club(); // Select club by name
+        cout << "Phone_Number: ";
+        cin >> member.Phone_no;
+        fout << member.ID << "," << member.name << "," << member.post << "," << member.club << "," << member.Phone_no << endl;
+        fout.close();
+        cout << "The record is successfully added" << endl;
+    flag:
+        cout << "Add any more (Y/N)? ";
+        switch (getch())
+        {
+        case 'Y':
+        case 'y':
+        {
+            add_new_member(); // Add another member
+            break;
+        }
+        case 'N':
+        case 'n':
+        {
+            main_menu(); // Add another member
+            break;
+        }
+        default:
+        {
+            system("cls"); // Clear screen
+            cout << "\a\nEnter Valid Option !" << endl;
+            _sleep(1000);
+            goto flag;
+        }
+        }
+    }
+    else
+    {
+        system("cls");
+        cout << "\nWrong Password !";
+        _sleep(1000);
+        add_new_member();
     }
 }
