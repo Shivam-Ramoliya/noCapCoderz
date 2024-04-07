@@ -34,6 +34,7 @@ void Loading();
 int password();
 bool is_member_exists(int memberID);
 void view_clubs();
+void delete_club();
 
 // Function to display main menu
 void main_menu()
@@ -662,4 +663,74 @@ void view_clubs()
     }
     return_to_main_menu();
     fin.close();
+}
+
+// Function to delete club
+void delete_club()
+{
+    system("cls");      // Clears the Screen
+    int x = password(); // Password needed to delete the club
+    if (x)
+    {
+        cout << "\nPassword Matched!";
+        _sleep(1000);  // wait for 1.0 sec
+        system("cls"); // Clears the Screen
+        ifstream fin(CLUBS_FILE);
+        if (!fin)
+        {
+            cerr << "Error: Unable to open clubs file for reading." << endl;
+            return_to_main_menu();
+        }
+
+        vector<string> clubs; // Vector to store club
+        string line;
+        int clubID = 1;
+
+        cout << "\nSelect Club to Delete:" << endl;
+        cout << "================" << endl;
+
+        while (getline(fin, line))
+        {
+            clubs.push_back(line);
+            cout << clubID << ". " << line << endl;
+            clubID++;
+        }
+
+        fin.close();
+
+        cout << "================" << endl;
+        int choice;
+        cout << "Enter Club ID to Delete: ";
+        cin >> choice;
+
+        if (choice < 1 || choice > clubs.size())
+        {
+            cout << "Invalid Club ID!" << endl;
+            _sleep(1000); // wait for 1.0 sec
+            delete_club();
+            return;
+        }
+
+        cout << "Deleting club: " << clubs[choice - 1] << endl;
+        clubs.erase(clubs.begin() + choice - 1);
+
+        ofstream fout("temp.csv");
+        for (const string &club : clubs) // Write all club name exept which is needed to delete
+        {
+            fout << club << endl;
+        }
+        fout.close();
+
+        remove(CLUBS_FILE.c_str());             // Delete the clubs.csv file
+        rename("temp.csv", CLUBS_FILE.c_str()); // rename the temp.csv to clubs.csv
+        cout << "Club deleted successfully!" << endl;
+        return_to_main_menu();
+    }
+    else
+    {
+        system("cls"); // Clears the Screen
+        cout << "\nWrong Password!";
+        _sleep(1000); // wait for 1.0 sec
+        delete_club();
+    }
 }
