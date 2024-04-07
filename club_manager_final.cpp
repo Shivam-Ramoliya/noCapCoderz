@@ -32,6 +32,7 @@ void add_new_club();
 string select_club();
 void Loading();
 int password();
+bool is_member_exists(int memberID);
 
 // Function to display main menu
 void main_menu()
@@ -241,6 +242,42 @@ void add_new_member()
         _sleep(1000);
         add_new_member();
     }
+}
+
+// Check if Member ia already Exist or not
+bool is_member_exists(int memberID)
+{
+    ifstream fin(FILENAME); // Open File to Read
+    if (!fin.is_open())
+    {
+        cerr << "Error opening file for reading!" << endl;
+        exit(1);
+    }
+
+    Member member;
+    string line;
+    while (getline(fin, line))
+    {
+        // Creat stringstream object ss and initialize it a Line.
+        // This stringstream will allow us to treat the string 'line' as a stream, facilitating parsing.
+        stringstream ss(line);
+
+        string get_line; // Declare a string variable named 'get_line' to store each extracted token.
+
+        getline(ss, get_line, ',');
+        // Read data from the stringstream 'ss' until a comma (',') is encountered.
+        // Store the extracted data in the 'get_line' variable.
+
+        member.ID = stoi(get_line); // Convert String to Integer of get_line
+
+        if (member.ID == memberID)
+        {
+            fin.close();
+            return true;
+        }
+    }
+    fin.close();
+    return false;
 }
 
 // Function to delete a member
