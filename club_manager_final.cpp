@@ -741,3 +741,10 @@ bool sort_clubs(const Member &a, const Member &b)
 {
     return a.club < b.club;
 }
+
+// Main function
+int main()
+{
+    Loading();
+    return 0;
+}
