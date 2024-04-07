@@ -35,6 +35,7 @@ int password();
 bool is_member_exists(int memberID);
 void view_clubs();
 void delete_club();
+bool sort_clubs(const Member &a, const Member &b);
 
 // Function to display main menu
 void main_menu()
@@ -733,4 +734,10 @@ void delete_club()
         _sleep(1000); // wait for 1.0 sec
         delete_club();
     }
+}
+
+// Comparison function to sort members based on club names
+bool sort_clubs(const Member &a, const Member &b)
+{
+    return a.club < b.club;
 }
