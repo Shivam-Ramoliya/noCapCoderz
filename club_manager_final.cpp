@@ -33,6 +33,7 @@ string select_club();
 void Loading();
 int password();
 bool is_member_exists(int memberID);
+void view_clubs();
 
 // Function to display main menu
 void main_menu()
@@ -617,4 +618,48 @@ string select_club()
     }
 
     return clubs[choice - 1];
+}
+
+// Function to View all the Clubs.
+void view_clubs()
+{
+    system("cls");            // Clears the Screen
+    ifstream fin(CLUBS_FILE); //  File Open in read Mode
+    if (!fin.is_open())
+    {
+        cout << BLACK <<  "Error opening file: " << CLUBS_FILE << endl << RESET;
+        return;
+    }
+
+    string line;
+    int i = 1;
+    cout << RED <<  "\nClubs List" << endl << RESET;
+    cout << MAGENTA <<  setw(30) << left << "<CLUBS>" << setw(25) << left << "<CLUB_CATEGORY>" << endl << RESET;
+
+    while (getline(fin, line))
+    {
+        // stringstream as mentioned above
+        stringstream ss(line);
+        vector<string> tokens;
+        string token;
+
+        while (getline(ss, token, ','))
+        {
+            tokens.push_back(token);
+        }
+
+        if (tokens.size() >= 2)
+        {
+            if(i<10){
+            cout << BLUE << "0" << i << ". " << setw(30) << left << tokens[0] << setw(25) << left << tokens[1] << endl << RESET;
+            i++;
+            }
+            else{
+            cout <<BLUE << i << ". " << setw(30) << left << tokens[0] << setw(25) << left << tokens[1] << endl << RESET;
+            i++;
+            }
+        }
+    }
+    return_to_main_menu();
+    fin.close();
 }
