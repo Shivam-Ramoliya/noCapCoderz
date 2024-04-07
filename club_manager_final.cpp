@@ -234,3 +234,11 @@ void view_members()
     cout << "=========================================================================================================";
     return_to_main_menu();
 }
+
+// Function to return to main menu
+void return_to_main_menu()
+{
+    cout << "\nPress ENTER to return to the main menu...";
+    getch();
+    main_menu();
+}
