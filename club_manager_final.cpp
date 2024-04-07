@@ -29,6 +29,7 @@ void search_member();
 void return_to_main_menu();
 string select_category();
 void add_new_club();
+string select_club();
 
 // Function to display main menu
 void main_menu()
@@ -452,4 +453,48 @@ void add_new_club()
         _sleep(1000);
         add_new_club();
     }
+}
+
+// Function to select club by name
+string select_club()
+{
+    ifstream fin(CLUBS_FILE);
+    if (!fin.is_open())
+    {
+        cout << "Error opening file: " << CLUBS_FILE << endl;
+        return "";
+    }
+
+    vector<string> clubs;
+    string line;
+    int club = 1;
+
+    cout << "\nSelect Club:" << endl;
+    cout << "==================" << endl;
+
+    while (getline(fin, line))
+    {
+        // srtringstream as mentioned above
+        stringstream ss(line);
+        string clubName;
+        getline(ss, clubName, ','); // Read only the first get_line (club name)
+        clubs.push_back(clubName);
+        cout << club << ". " << clubName << endl;
+        club++;
+    }
+
+    fin.close();
+
+    cout << "==================" << endl;
+    int choice;
+    cout << "Enter Club ID: ";
+    cin >> choice;
+
+    if (choice < 1 || choice > clubs.size())
+    {
+        cout << "Invalid Club ID" << endl;
+        return_to_main_menu();
+    }
+
+    return clubs[choice - 1];
 }
